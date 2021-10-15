@@ -1,9 +1,6 @@
-if (process.env.DB_URL !== "production") {
-    const dbUrl = 'mongodb://localhost:27017/camp-ground';
-} else {
-    const dbUrl = process.env.DB_URL;
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
 }
-
 
 
 
@@ -18,19 +15,18 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
-const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
-const usersRoutes = require('./routes/users')
-const campgroundsRoutes = require('./routes/campgrounds');
-const reviewsRoutes = require('./routes/reviews');
-const { contentSecurityPolicy } = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const userRoutes = require('./routes/users');
+const campgroundRoutes = require('./routes/campgrounds');
+const reviewRoutes = require('./routes/reviews');
 
 const MongoDBStore = require("connect-mongo")(session);
 
 // const dbUrl = process.env.DB_URL
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp2';
 
-mongoose.connect(dbUrl)
+mongoose.connect(dbUrl);
 
 
 const db = mongoose.connection;
@@ -140,11 +136,6 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get('/fakeUser', async (req, res) => {
-    const user = new User({email: 'coltttt@gamil.com', username: 'colttt'});
-    const newUser = await User.register(user, 'chicken');
-    res.send(newUser);
-})
 
 app.use('/', usersRoutes)
 app.use('/campgrounds', campgroundsRoutes)
