@@ -137,9 +137,9 @@ app.use((req, res, next) => {
 })
 
 
-app.use('/', usersRoutes)
-app.use('/campgrounds', campgroundsRoutes)
-app.use('/campgrounds/:id/reviews', reviewsRoutes)
+app.use('/', userRoutes)
+app.use('/campgrounds', campgroundRoutes)
+app.use('/campgrounds/:id/reviews', reviewRoutes)
 
 app.get('/', (req, res) => {
     res.render('home')
