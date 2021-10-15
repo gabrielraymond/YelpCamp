@@ -1,5 +1,7 @@
-if(process.env.NODE_ENV !== "productions") {
-    require('dotenv').config();
+if (process.env.DB_URL !== "production") {
+    const dbUrl = 'mongodb://localhost:27017/camp-ground';
+} else {
+    const dbUrl = process.env.DB_URL;
 }
 
 
